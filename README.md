@@ -1,54 +1,6 @@
 ## PopLayer 简介
 整个弹层是由一个弹层类PopLayer动态生成的，每生成一个，就会向PopLayer对象池里增加一个，这个对象池为全局变量top.PopLayer（这里的top表示最顶层的窗体，因为smdb的整体前台架构是基于多窗体的）的一个属性。所以对于已经生成的弹层对象，可以通过top.PopLayer.instances[index]来引用，比如要获取从父页面传过来的数据就可以用top.PopLayer.instances[index].inData来引用，调用回调函数可以通过top.PopLayer.instances[index].callback(data)来调用（此时应该注意函数的作用域为父页面，如果想改变函数的作用域，可以用apply或call函数来手动指定函数作用域）。所有的弹层配置信息都存在args这个对象里面，参数的详细信息
 
-<table >
-	<tr>
-    <th >变量名</th>
-    <th >类型</th>
-    <th >作用</th>
-  </tr>
-  <tr>
-    <td >title</td>
-    <td >String</td>
-    <td >弹出层标题</td>
-  </tr>
-  <tr>
-    <td >src</td>
-    <td >String</td>
-    <td >弹出层是否模态</td>
-  </tr>
-  <tr>
-    <td >isModal</td>
-    <td >Boolean</td>
-    <td >弹出层是否模态</td>
-  </tr>
-  <tr>
-    <td >moveable</td>
-    <td >Boolean</td>
-    <td >弹出层可否移动</td>
-  </tr>
-  <tr>
-    <td >document</td>
-    <td >Object</td>
-    <td >上下文文档对象</td>
-  </tr>
-  <tr>
-    <td >inData</td>
-    <td >Object</td>
-    <td >弹出层传入数据</td>
-  </tr>
-  <tr>
-    <td >outData</td>
-    <td >Object</td>
-    <td >弹出层回调数据</td>
-  </tr>
-  <tr>
-    <td >callBack</td>
-    <td >Function</td>
-    <td >弹出层回调函数</td>
-  </tr>
-</table>
-
 通过配置不同的参数能满足不同的弹层应用场合。例如，配置isModal属性可以控制生成的弹层是否有遮罩层，配置moveable可以控制生成的弹层是否可以移动等等。
 
 ##详细API介绍：
@@ -67,7 +19,7 @@
 
 4. `PopLayer.prototype.initStyle()`
 
-	用来初始化遮罩层和弹层页面的。在生成遮罩层时，为了最大限度的兼容各主流浏览器，实际上生成了两个遮罩层，一个是一个具有半透明效果（opacity = 0.3）的div，还有一个是一个具有半透明效果（opacity = 0.3）的iframe。对于webkit内核的浏览器（chrome、safari）以及Mozilla的Firefox来说，一个透明div足以，透明div在IE6下会有select穿透的bug（#FuckIE6 详情请见http://blog.csdn.net/yangzhihello/article/details/41207175），所以不得已而为之加了一层iframe。
+	用来初始化遮罩层和弹层页面的。在生成遮罩层时，为了最大限度的兼容各主流浏览器，实际上生成了两个遮罩层，一个是一个具有半透明效果（opacity = 0.3）的div，还有一个是一个具有半透明效果（opacity = 0.3）的iframe。对于webkit内核的浏览器（chrome、safari）以及Mozilla的Firefox来说，一个透明div足以，透明div在IE6下会有select穿透的bug（#FuckIE6 详情请见 [http://blog.csdn.net/yangzhihello/article/details/41207175](http://blog.csdn.net/yangzhihello/article/details/41207175)），所以不得已而为之加了一层iframe。
 
 6. `PopLayer.prototype.initContent()`
 
